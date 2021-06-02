@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:10 by sguilher          #+#    #+#             */
-/*   Updated: 2021/05/17 22:05:49 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/02 23:35:07 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,41 @@
 
 int	get_next_line(int fd, char **line)
 {
-	static int	i = 0;
-	int			count;
-	char		*buffer[BUFFER_SIZE + 1];
+	//static int	size = 0;
+	int		nread;
+	char	*buf;
 
-	if (!(*buffer = malloc(BUFFER_SIZE * sizeof(char))))
-		return (-1);
-	if (count = read(fd, buffer, BUFFER_SIZE) > 0) // read function returns the number of bytes readed
+	//check fd value
+	if(fd == -1) // || fd > RLIMIT_NOFILE)
 	{
+		printf("open error\n");
+		return (-1);
+	}
+	printf("fd = %d\n", fd);
 
+	//check BUFFER_SIZE value
+	if(BUFFER_SIZE < 1)
+	{
+		printf("BUFFER_SIZE error\n");
+		return (-1);
 	}
 
-	return (1); // a line has been read
-	return (0); // EOF has been reached
-	return (-1); // an error happened
+	//check memory allocation for buf
+	if(!(buf = (char *)malloc((BUFFER_SIZE + 1)* sizeof(char))))
+	{
+		printf("malloc error\n");
+		return (-1);
+	}
+	buf[BUFFER_SIZE] = '\0';
+	if((nread = read(fd, buf, BUFFER_SIZE)) == -1)
+	{
+		printf("read error\n");
+		return (0);
+	}
+	printf("read_return = %d\n", nread);
+	buf[BUFFER_SIZE + 1] = '\0';
+	*line = buf;
+	printf("%s\n", *line);
+	//free(buf);
+	return (1);
 }
