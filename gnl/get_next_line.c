@@ -6,49 +6,87 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:10 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/02 23:35:07 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/03 06:13:24 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
+int	ft_have_c(char *str, char c)
+{
+	int		i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (0);
+}
+
+void	ft_bzero(void *s, size_t len)
+{
+	size_t	i;
+	char	*ptr;
+
+	i = 0;
+	ptr = (char *)s;
+	while (i < len)
+		ptr[i++] = '\0';
+}
+
 int	get_next_line(int fd, char **line)
 {
-	//static int	size = 0;
-	int		nread;
-	char	*buf;
+	static char	*tmp = NULL;
+	int			n_read;
+	int			pos;
+	char		*buf;
+	char		*l;
 
-	//check fd value
-	if(fd == -1) // || fd > RLIMIT_NOFILE)
-	{
-		printf("open error\n");
+	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || fd > RLIMIT_NOFILE)
 		return (-1);
-	}
-	printf("fd = %d\n", fd);
-
-	//check BUFFER_SIZE value
-	if(BUFFER_SIZE < 1)
-	{
-		printf("BUFFER_SIZE error\n");
+	if (!(buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char))))
 		return (-1);
-	}
-
-	//check memory allocation for buf
-	if(!(buf = (char *)malloc((BUFFER_SIZE + 1)* sizeof(char))))
+	// incializing tmp
+	if (!tmp)
+		tmp = ft_strdup("");
+	if ((pos = ft_have_c(tmp, '\n')) > 0)
 	{
-		printf("malloc error\n");
+		l = ft_first_str(tmp, pos);
+		tmp = ft_strdup(ft_last_str(tmp, pos));
+	}
+	//reading the file
+	while ((n_read = read(fd, buf, BUFFER_SIZE)) > 0)
+	{
+		buf[n_read] = '\0';
+		if ((pos = ft_have_c(buf, '\n')) == 0)
+		{
+			tmp = ft_strjoin(tmp, buf);
+			ft_bzero(buf, BUFFER_SIZE + 1);
+		}
+		else
+		{
+			tmp = ft_strjoin(tmp, ft_first_str(buf, pos));
+			l = ft_strdup(tmp);
+			*line = l;
+			free(tmp);
+			tmp = ft_strdup(ft_last_str(buf, pos));
+			free(buf);
+			return (1);
+		}
+	}
+	printf("read_return = %d\n", n_read); ////////
+	if (n_read == 0)
+		return (0); // indicates EOF
+	if (n_read == -1)
 		return (-1);
-	}
-	buf[BUFFER_SIZE] = '\0';
-	if((nread = read(fd, buf, BUFFER_SIZE)) == -1)
-	{
-		printf("read error\n");
-		return (0);
-	}
-	printf("read_return = %d\n", nread);
-	buf[BUFFER_SIZE + 1] = '\0';
-	*line = buf;
-	printf("%s\n", *line);
-	//free(buf);
+	tmp = ft_strjoin(tmp, ft_first_str(buf, pos));
+	l = ft_strdup(tmp);
+	*line = l;
+	free(tmp);
+	tmp = ft_strdup(ft_last_str(buf, pos));
+	free(buf);
 	return (1);
 }
