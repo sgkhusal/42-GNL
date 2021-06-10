@@ -6,11 +6,19 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 04:07:56 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/10 22:36:45 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	ft_clean(char *content, t_gnl tmp, char *buf)
+{
+	free(content);
+	free(tmp.content);
+	free(tmp.next);
+	free(buf);
+}
 
 size_t	ft_strlen(const char *str)
 {
@@ -39,7 +47,7 @@ char	*ft_strdup(char *s)
 
 	size = ft_strlen(s) + 1;
 	copy = (char *)malloc(size * sizeof(char));
-	if (copy)
+	if (!copy)
 		return (NULL);
 	i = 0;
 	while (i < size - 1)

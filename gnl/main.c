@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 04:57:42 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/10 20:52:41 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(void)
 	printf("fd = %d\n", fd);
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
-		printf("%s\n", line);
+		printf("resultado na main: %s\n", line);
 	}
 	if (gnl == 0)
 		printf("EOF\n");

@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:23 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 04:57:50 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/10 22:36:43 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,16 @@
 # include <sys/resource.h>
 # include <stdio.h> //////////////////////////////////////////////TIRAR
 
-typedef struct s_line
+typedef struct s_gnl
 {
-	char			*content;
-	struct s_line	*next;
-}				t_list;
+	char	*content;
+	char	*next;
+}				t_gnl;
 
 int		get_next_line(int fd, char **line);
+void	ft_clean(char *content, t_gnl tmp, char *buf);
 size_t	ft_strlen(const char *str);
 void	ft_bzero(char *s, size_t len);
-char	*ft_last_str(char *s, int pos);
-char	*ft_first_str(char *s, int pos);
 char	*ft_strdup(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 
