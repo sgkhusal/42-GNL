@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 22:36:45 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/11 06:06:18 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ char	*ft_strdup(char *s)
 	return (copy);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int clean)
 {
 	size_t	size;
 	size_t	i;
@@ -68,9 +68,9 @@ char	*ft_strjoin(char *s1, char *s2)
 
 	if (!s1 && !s2)
 		return (NULL);
-	if (!s1 || !s1[0])
+	else if (!s1 || !s1[0])
 		return (ft_strdup(s2));
-	if (!s2 || !s2[0])
+	else if (!s2 || !s2[0])
 		return (ft_strdup(s1));
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	join = (char *)malloc(size * sizeof(char));
@@ -83,5 +83,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	while (++j + i < size)
 		join[i + j] = s2[j];
 	join[i + j] = '\0';
+	if (clean == 1)
+		free(s1);
 	return (join);
 }

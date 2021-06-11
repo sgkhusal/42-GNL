@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:23 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 22:36:43 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/11 06:00:10 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ void	ft_clean(char *content, t_gnl tmp, char *buf);
 size_t	ft_strlen(const char *str);
 void	ft_bzero(char *s, size_t len);
 char	*ft_strdup(char *s);
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin(char *s1, char *s2, int clean);
 
 #endif

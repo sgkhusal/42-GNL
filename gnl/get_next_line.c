@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 19:17:03 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 23:01:03 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/11 06:18:40 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	ft_read_line(int fd, char *buf, char *content, t_gnl tmp)
 	while (ft_split_new_line(buf, tmp.content, tmp.next) == 0)
 	{
 		//printf("tmp.content: %s\n", tmp.content);
-		content = ft_strjoin(content, tmp.content);
+		content = ft_strjoin(content, tmp.content, 1);
 		printf("1. content in ft_read_line: %s\n", content);
 		ft_bzero(tmp.content, ft_strlen(tmp.content));
 		n_read = read(fd, buf, BUFFER_SIZE);
@@ -74,7 +74,7 @@ int	ft_read_line(int fd, char *buf, char *content, t_gnl tmp)
 		//printf("read_return = %d\n", n_read);
 		//printf("%s\n", buf);
 	}
-	content = ft_strjoin(content, tmp.content);
+	content = ft_strjoin(content, tmp.content, 1);
 	printf("2. content in ft_read_line: %s\n", content);
 	return (1); ///////
 }
@@ -87,20 +87,19 @@ int	ft_gnl(int fd, char **line, char *buf, char *content, t_gnl tmp)
 	if (next)
 	{
 		//printf ("entendeu que tem residual antigo\n");
-		if (ft_split_new_line(next, content, tmp.next) == 1)
+		if (ft_split_new_line(next, tmp.content, tmp.next) == 1)
 		{
-			printf("1. content in ft_gnl: %s\n", content);
-			*line = ft_strdup(content);
+			printf("1. content in ft_gnl: %s\n", tmp.content);
+			*line = ft_strdup(tmp.content);
 		}
-
 		else
 		{
-			ft_bzero(content, ft_strlen(content));
+			ft_bzero(tmp.content, ft_strlen(tmp.content));
 			nl = ft_read_line(fd, buf, content, tmp);
 			printf("2. content in ft_gnl: %s\n", content);
 			if (nl < 1)
 				return (nl);
-			*line = ft_strjoin(next, content);
+			*line = ft_strjoin(next, content, 0);
 		}
 		free(next);
 	}
@@ -108,6 +107,9 @@ int	ft_gnl(int fd, char **line, char *buf, char *content, t_gnl tmp)
 	{
 		nl = ft_read_line(fd, buf, content, tmp);
 		printf("3. content in ft_gnl: %s\n", content);
+		printf("3. tmp.content in ft_gnl: %s\n", tmp.content);
+		printf("3. tmp.next in ft_gnl: %s\n", tmp.next);
+		printf("3. buf in ft_gnl: %s\n", buf);
 		if (nl < 1)
 			return (nl);
 		*line = ft_strdup(content);
@@ -134,10 +136,11 @@ int	get_next_line(int fd, char **line)
 	tmp.next = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buf || !content || !tmp.next || !tmp.content)
 		return (-1);
-	ft_bzero(content, ft_strlen(content));
-	ft_bzero(tmp.content, ft_strlen(tmp.content));
-	ft_bzero(tmp.next, ft_strlen(tmp.next));
+	ft_bzero(content, BUFFER_SIZE + 1);
+	ft_bzero(tmp.content, BUFFER_SIZE + 1);
+	ft_bzero(tmp.next, BUFFER_SIZE + 1);
 	nl = ft_gnl(fd, line, buf, content, tmp);
+
 	ft_clean(content, tmp, buf);
 	return (nl);
 }

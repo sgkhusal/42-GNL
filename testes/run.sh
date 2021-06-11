@@ -1,5 +1,7 @@
 ## mandatory and bonus tests
-make && ./mandatory #&& ./bonus
+make
+chmod 764 mandatory
+bash ./mandatory #&& ./bonus
 
 ## madatory tests only
 #make m && ./mandatory
