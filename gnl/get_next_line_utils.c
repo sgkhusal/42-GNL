@@ -6,21 +6,19 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/11 06:06:18 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/13 22:56:52 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_clean(char *content, t_gnl tmp, char *buf)
+void	ft_clean(char *str)
 {
-	free(content);
-	free(tmp.content);
-	free(tmp.next);
-	free(buf);
+	if (str)
+		free(str);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	len;
 
@@ -83,7 +81,7 @@ char	*ft_strjoin(char *s1, char *s2, int clean)
 	while (++j + i < size)
 		join[i + j] = s2[j];
 	join[i + j] = '\0';
-	if (clean == 1)
+	if (clean == 1 && !s1)
 		free(s1);
 	return (join);
 }

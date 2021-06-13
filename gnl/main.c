@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/10 20:52:41 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/13 22:49:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-int	main(void)
+void	test_script(int fd)
 {
 	char	*line;
-	int		fd;
 	int		gnl;
 
 	//*line = NULL;
-	fd = open("hotel_diablo", O_RDONLY);
 	printf("fd = %d\n", fd);
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
@@ -32,6 +30,20 @@ int	main(void)
 	if (gnl == -1)
 		printf("error\n");
 	close(fd);
+}
+
+int	main(void)
+{
+	int		fd;
+
+	fd = open("hello.txt", O_RDONLY);
+	test_script(fd);
+	fd = open("hotel_diablo", O_RDONLY);
+	test_script(fd);
+	fd = open("hello.txt", O_RDONLY);
+	test_script(fd);
+
+
 	return (0);
 	// test 1: file with several lines
 	// test 2: file with a single line

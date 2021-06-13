@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_old2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/13 22:57:23 by sguilher         ###   ########.fr       */
+/*   Created: 2021/06/09 19:17:03 by sguilher          #+#    #+#             */
+/*   Updated: 2021/06/13 22:02:58 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_split_new_line(char *str, char *line, char *next)
+// verificar e separar \n
+int	ft_split_new_line(char *str, char *new_l, char *tmp)
 {
 	int	i;
 	int	j;
@@ -25,82 +26,84 @@ int	ft_split_new_line(char *str, char *line, char *next)
 	{
 		if (str[i] == '\n')
 		{
-			line[j] = '\0';
+			new_l[j] = '\0';
 			j = 0;
 			while (str[i + 1])
 			{
-				next[j] = str[i + 1];
+				tmp[j] = str[i + 1];
 				i++;
 				j++;
 			}
-			next[j] = '\0';
+			tmp[j] = '\0';
+			//printf("tem uma nova linha: \n"); ///
+			//printf("%s\n\n", new_l);
+			//printf("%s\n", tmp);
 			return (1);
 		}
 		else
-			line[j] = str[i];
+			new_l[j] = str[i];
 		i++;
 		j++;
 	}
-	line[j] = '\0';
+	new_l[j] = '\0';
+	//printf("nao tem uma nova linha: \n"); ///
+	//printf("%s\n", new_l);
 	return (0);
 }
 
-int	ft_read_line(int fd, char *buf, t_gnl *tmp)
+int	ft_read_line(int fd, char *buf, t_gnl tmp)
 {
 	int		n_read;
 	char	*content;
 
-	content = ft_strdup("");
-	while (ft_split_new_line(buf, (*tmp).content, (*tmp).next) == 0)
+
+	while (ft_split_new_line(buf, tmp.content, tmp.next) == 0)
 	{
-		content = ft_strjoin(content, (*tmp).content, 1);
-		ft_bzero((*tmp).content, ft_strlen((*tmp).content));
+		content = ft_strjoin(content, tmp.content, 1);
+		ft_bzero(tmp.content, ft_strlen(tmp.content));
 		n_read = read(fd, buf, BUFFER_SIZE);
 		if (n_read < 1)
 			return (n_read);
 		buf[n_read] = '\0';
 	}
-	content = ft_strjoin(content, (*tmp).content, 1);
-	ft_clean((*tmp).content);
-	(*tmp).content = ft_strdup(content);
-	ft_clean(content);
-	return (1);
+	content = ft_strjoin(content, tmp.content, 1);
+	tmp.content = ft_strdup(content);
+	free(content);
+	return (1); ///////
 }
 
-int	gnl_next(int fd, char *buf, char **next, t_gnl *tmp)
+int	ft_gnl(int fd, char **line, char *buf, char **next)
 {
+
 	int	nl;
 
-	if (ft_split_new_line(*next, (*tmp).content, (*tmp).next) == 0)
+	if (ft_split_new_line(next, tmp.content, tmp.next) == 1)
 	{
-		ft_bzero((*tmp).content, ft_strlen((*tmp).content));
+		printf("1. tmp.content in ft_gnl: %s\n", tmp.content);
+		*line = ft_strdup(tmp.content);
+	}
+	else
+	{
+		ft_bzero(tmp.content, ft_strlen(tmp.content));
 		nl = ft_read_line(fd, buf, tmp);
+		printf("2. content in ft_gnl: %s\n", tmp.content);
 		if (nl < 1)
 			return (nl);
-		(*tmp).content = ft_strjoin(*next, (*tmp).content, 2); // precisaria liberar o tmp.content no strjoin
+		*line = ft_strjoin(next, tmp.content, 0);
+		free(next);
 	}
-	ft_clean(*next);
+
+
 	return (1);
-}
-
-int	gnl_not_next(int fd, char *buf, t_gnl *tmp)
-{
-	int	nl;
-
-	nl = read(fd, buf, BUFFER_SIZE);
-	if (nl < 1)
-		return (nl);
-	buf[nl] = '\0';
-	nl = ft_read_line(fd, buf, tmp);
-	return (nl);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*next[OPEN_MAX];
 	t_gnl		tmp;
 	char		*buf;
 	int			nl;
+	static char	*next[256];
+
 
 	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || fd > OPEN_MAX)
 		return (-1);
@@ -112,16 +115,18 @@ int	get_next_line(int fd, char **line)
 	ft_bzero(tmp.content, BUFFER_SIZE + 1);
 	ft_bzero(tmp.next, BUFFER_SIZE + 1);
 	if (next[fd])
-		nl = gnl_next(fd, buf, &next[fd], &tmp);
-	else
-		nl = gnl_not_next(fd, buf, &tmp);
+		nl = ft_read_line(fd, next[fd], tmp);
+	nl = ft_read_line(fd, buf, tmp);
 	if (nl < 1)
 		return (nl);
 	*line = ft_strdup(tmp.content);
-	next[fd] = ft_strdup(tmp.next); // verificar se pode dar algum erro
-	ft_clean(tmp.content); ///
-	ft_clean(tmp.next); ///
-	printf("line = %s\n", *line);
-	printf("next = %s\n", next[fd]);
-	return (1);
+	nl = read(fd, buf, BUFFER_SIZE);
+	if (nl < 1)
+		return (nl);
+	buf[nl] = '\0';
+	if (tmp.next)
+		next[fd] = ft_strdup(tmp.next);
+	printf("next content:\n%s\n", next[fd]);
+	ft_clean(content, tmp, buf);
+	return (nl);
 }

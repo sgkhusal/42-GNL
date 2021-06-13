@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:23 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/11 06:00:10 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/13 22:55:19 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include <sys/resource.h>
+# include <limits.h>
 # include <stdio.h> //////////////////////////////////////////////TIRAR
+
+# define OPEN_MAX 256 ///////////////////////////////////////
 
 typedef struct s_gnl
 {
@@ -26,8 +28,8 @@ typedef struct s_gnl
 }				t_gnl;
 
 int		get_next_line(int fd, char **line);
-void	ft_clean(char *content, t_gnl tmp, char *buf);
-size_t	ft_strlen(const char *str);
+void	ft_clean(char *str);
+size_t	ft_strlen(char *str);
 void	ft_bzero(char *s, size_t len);
 char	*ft_strdup(char *s);
 char	*ft_strjoin(char *s1, char *s2, int clean);
