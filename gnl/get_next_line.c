@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/13 22:57:23 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/13 23:24:32 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,10 @@ int	ft_split_new_line(char *str, char *line, char *next)
 		if (str[i] == '\n')
 		{
 			line[j] = '\0';
-			j = 0;
-			while (str[i + 1])
-			{
-				next[j] = str[i + 1];
-				i++;
-				j++;
-			}
-			next[j] = '\0';
+			j = -1;
+			while (str[++i])
+				next[++j] = str[i];
+			next[++j] = '\0';
 			return (1);
 		}
 		else
@@ -48,22 +44,29 @@ int	ft_split_new_line(char *str, char *line, char *next)
 int	ft_read_line(int fd, char *buf, t_gnl *tmp)
 {
 	int		n_read;
+	int		nl;
 	char	*content;
 
 	content = ft_strdup("");
-	while (ft_split_new_line(buf, (*tmp).content, (*tmp).next) == 0)
+	nl = ft_split_new_line(buf, (*tmp).content, (*tmp).next);
+	while (nl == 0)
 	{
+		//printf("ft_split_new_line = 0\n");
+		//printf("buf = %s\n", buf);
 		content = ft_strjoin(content, (*tmp).content, 1);
 		ft_bzero((*tmp).content, ft_strlen((*tmp).content));
 		n_read = read(fd, buf, BUFFER_SIZE);
 		if (n_read < 1)
 			return (n_read);
 		buf[n_read] = '\0';
+		nl = ft_split_new_line(buf, (*tmp).content, (*tmp).next);
 	}
+	printf("buf = %s\n", buf);
 	content = ft_strjoin(content, (*tmp).content, 1);
 	ft_clean((*tmp).content);
 	(*tmp).content = ft_strdup(content);
 	ft_clean(content);
+	ft_clean(buf);
 	return (1);
 }
 
@@ -118,7 +121,7 @@ int	get_next_line(int fd, char **line)
 	if (nl < 1)
 		return (nl);
 	*line = ft_strdup(tmp.content);
-	next[fd] = ft_strdup(tmp.next); // verificar se pode dar algum erro
+	next[fd] = ft_strdup(tmp.next);
 	ft_clean(tmp.content); ///
 	ft_clean(tmp.next); ///
 	printf("line = %s\n", *line);
