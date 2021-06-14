@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/13 22:56:52 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 01:13:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_clean(char *str)
 {
 	if (str)
 		free(str);
+	str = NULL;
 }
 
 size_t	ft_strlen(char *str)

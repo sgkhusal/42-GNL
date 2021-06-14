@@ -6,11 +6,11 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/13 23:21:14 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 03:07:58 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../gnl/get_next_line.h"
 #include <fcntl.h>
 #include <stdio.h>
 
@@ -19,11 +19,13 @@ void	test_script(int fd)
 	char	*line;
 	int		gnl;
 
-	//*line = NULL;
+	line = NULL;
 	printf("fd = %d\n", fd);
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
 		printf("resultado na main: %s\n", line);
+		ft_clean(line);
+		line = NULL;
 	}
 	if (gnl == 0)
 		printf("EOF\n");
@@ -36,11 +38,11 @@ int	main(void)
 {
 	int		fd;
 
-	fd = open("hello.txt", O_RDONLY);
+	fd = open("file_tests/hello.txt", O_RDONLY);
 	test_script(fd);
-	fd = open("hotel_diablo", O_RDONLY);
-	test_script(fd);
-	fd = open("hello.txt", O_RDONLY);
+	/*fd = open("file_tests/hotel_diablo", O_RDONLY);
+	test_script(fd);*/
+	fd = open("file_tests/hello.txt", O_RDONLY);
 	test_script(fd);
 
 

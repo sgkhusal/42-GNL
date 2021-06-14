@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/13 23:24:32 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 03:05:19 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	ft_read_line(int fd, char *buf, t_gnl *tmp)
 		buf[n_read] = '\0';
 		nl = ft_split_new_line(buf, (*tmp).content, (*tmp).next);
 	}
-	printf("buf = %s\n", buf);
+	//printf("buf = %s\n", buf);
 	content = ft_strjoin(content, (*tmp).content, 1);
 	ft_clean((*tmp).content);
 	(*tmp).content = ft_strdup(content);
@@ -107,6 +107,8 @@ int	get_next_line(int fd, char **line)
 
 	if (fd < 0 || BUFFER_SIZE < 1 || line == NULL || fd > OPEN_MAX)
 		return (-1);
+	if (*line)
+		ft_clean(*line);
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	tmp.content = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	tmp.next = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
