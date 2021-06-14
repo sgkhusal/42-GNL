@@ -6,7 +6,7 @@
 #    By: sguilher <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 23:17:16 by sguilher          #+#    #+#              #
-#    Updated: 2021/06/14 05:20:22 by sguilher         ###   ########.fr        #
+#    Updated: 2021/06/14 21:30:06 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ MAIN		= main.c
 NAME		= gnl
 
 # BUFFER_SIZE Tests
-BUF_MACRO	= -D BUFFER_SIZE=
 BUF_SIZE	= 12
 BUF_TESTS	= 0 1 2 3 4 7 8 11 12 13 20 25 256 257 1024 1025 9999 10000000
 ALL_BUF_TESTS	= $(addprefix buf, $(BUF_TESTS))
@@ -47,7 +46,8 @@ ALL_BUF_TESTS	= $(addprefix buf, $(BUF_TESTS))
 CC			= clang
 CFLAGS		= -Wall -Wextra -Werror
 #CFLAGS		= -g -Wall -Wextra -Werror#debugger
-LIMITS		= -D OPEN_MAX=1024
+LIMITS		= -D OPEN_MAX=1024 # take out in MacOX
+BUF_MACRO	= -D BUFFER_SIZE=
 COMPL		= $(CC) $(CFLAGS) $(SRCS) $(LIMITS) # Linux
 #COMPL		= $(CC) $(CFLAGS) $(SRCS) -o $(NAME) # MacOX
 

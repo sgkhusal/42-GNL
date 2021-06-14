@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/14 05:26:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 22:03:38 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #define TITLE1(string)		"\033[1;33m" string "\033[0m"
 #define TITLE2(string)		"\033[1;33m" string "\033[0m"
 #define LINE(string)		"\033[1;32m" string "\033[0m"
+#define RET(string)			"\033[1;33m" string "\033[0m"
 #define LINE_RET(string)	"\033[1;31m" string "\033[0m"
 
 void	test_script(int fd)
@@ -30,10 +31,14 @@ void	test_script(int fd)
 	printf("fd = %d\n", fd);
 	while ((gnl = get_next_line(fd, &line)) > 0)
 	{
-		printf(LINE("Line %d : ") LINE_RET("%s\n"), i, line);
-		ft_clean(line);
-		line = NULL;
+		printf(LINE("Line %d ") RET("[RET=%d]: ") LINE_RET("%s\n"), i, gnl, line);
+		free(line);
 		i++;
+	}
+	if (line != NULL && gnl == 0)
+	{
+		printf(LINE("Line %d ") RET("[RET=%d]: ") LINE_RET("%s\n"), i, gnl, line);
+		free(line);
 	}
 	if (gnl == 0)
 		printf("EOF\n");
@@ -74,7 +79,7 @@ int	main(void)
 
 	printf(TITLE2("Multiple long line\n"));
 	fd = open("file_tests/multiple_long_line", O_RDONLY);
-	test_script(fd);*/
+	test_script(fd);
 
 	printf(TITLE2("Single short line 1\n"));
 	fd = open("file_tests/single_short_line1", O_RDONLY);
@@ -98,11 +103,9 @@ int	main(void)
 
 	printf(TITLE2("Binary file\n"));
 	fd = open("file_tests/binary_file", O_RDONLY);
-	test_script(fd);
+	test_script(fd);*/
 
 	return (0);
-
-
 
 	// test 4: fd = stdin = 0
 	// test 7: read from a redirection
