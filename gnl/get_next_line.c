@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/14 03:05:19 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 05:23:50 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,13 @@ int	gnl_next(int fd, char *buf, char **next, t_gnl *tmp)
 		ft_bzero((*tmp).content, ft_strlen((*tmp).content));
 		nl = ft_read_line(fd, buf, tmp);
 		if (nl < 1)
+		{
+			ft_clean(*next);
+			ft_clean((*tmp).next);
+			ft_clean((*tmp).content);
+			ft_clean(buf);
 			return (nl);
+		}
 		(*tmp).content = ft_strjoin(*next, (*tmp).content, 2); // precisaria liberar o tmp.content no strjoin
 	}
 	ft_clean(*next);
@@ -92,7 +98,12 @@ int	gnl_not_next(int fd, char *buf, t_gnl *tmp)
 
 	nl = read(fd, buf, BUFFER_SIZE);
 	if (nl < 1)
-		return (nl);
+	{
+			ft_clean((*tmp).next);
+			ft_clean((*tmp).content);
+			ft_clean(buf);
+			return (nl);
+		}
 	buf[nl] = '\0';
 	nl = ft_read_line(fd, buf, tmp);
 	return (nl);
@@ -126,7 +137,7 @@ int	get_next_line(int fd, char **line)
 	next[fd] = ft_strdup(tmp.next);
 	ft_clean(tmp.content); ///
 	ft_clean(tmp.next); ///
-	printf("line = %s\n", *line);
-	printf("next = %s\n", next[fd]);
+	//printf("line = %s\n", *line);
+	//printf("next = %s\n", next[fd]);
 	return (1);
 }
