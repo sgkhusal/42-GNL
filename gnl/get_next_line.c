@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/14 22:03:48 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/15 06:05:52 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int	ft_read_line(int fd, int n_read, char *buf, t_gnl *tmp)
 	{
 		ft_clean((*tmp).content);
 		(*tmp).content = ft_strdup(content);
+		printf("tmp.content = %s\n", (*tmp).content);
 	}
 	ft_clean(content);
 	ft_clean(buf);
@@ -141,7 +142,7 @@ int	get_next_line(int fd, char **line)
 		nl = gnl_next(fd, buf, &next[fd], &tmp);
 	else
 		nl = gnl_not_next(fd, buf, &tmp);
-	printf("nl = %d\ntmp.content = %s\n", nl, tmp.content);
+	printf("nl = %d\ntmp.content = %s\n", nl, tmp.content); //
 	if (nl == 1 || (nl == 0 && tmp.content))
 		*line = ft_strdup(tmp.content);
 	if (nl < 1)
