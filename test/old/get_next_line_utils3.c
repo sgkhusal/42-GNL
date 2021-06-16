@@ -6,19 +6,17 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/16 20:50:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/14 01:13:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	ft_clean(char **str)
+void	ft_clean(char *str)
 {
-	if (str == NULL)
-		return ;
-	if (*str)
-		free(*str);
-	*str = NULL;
+	if (str)
+		free(str);
+	str = NULL;
 }
 
 size_t	ft_strlen(char *str)
@@ -40,7 +38,7 @@ void	ft_bzero(char *s, size_t len)
 		s[i++] = '\0';
 }
 
-char	*ft_strdup(char *s, int clean)
+char	*ft_strdup(char *s)
 {
 	char	*copy;
 	size_t	i;
@@ -57,8 +55,6 @@ char	*ft_strdup(char *s, int clean)
 		i++;
 	}
 	copy[i] = '\0';
-	if (clean == 1)
-		ft_clean(&s);
 	return (copy);
 }
 
@@ -72,9 +68,9 @@ char	*ft_strjoin(char *s1, char *s2, int clean)
 	if (!s1 && !s2)
 		return (NULL);
 	else if (!s1 || !s1[0])
-		return (ft_strdup(s2, NO_CLEAN));
+		return (ft_strdup(s2));
 	else if (!s2 || !s2[0])
-		return (ft_strdup(s1, NO_CLEAN));
+		return (ft_strdup(s1));
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	join = (char *)malloc(size * sizeof(char));
 	if (!join)
@@ -87,6 +83,6 @@ char	*ft_strjoin(char *s1, char *s2, int clean)
 		join[i + j] = s2[j];
 	join[i + j] = '\0';
 	if (clean == 1 && !s1)
-		ft_clean(&s1);
+		free(s1);
 	return (join);
 }

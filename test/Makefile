@@ -6,7 +6,7 @@
 #    By: sguilher <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 23:17:16 by sguilher          #+#    #+#              #
-#    Updated: 2021/06/14 21:30:06 by sguilher         ###   ########.fr        #
+#    Updated: 2021/06/16 22:37:59 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ MAIN		= main.c
 # read more than 1 fd at the same time
 
 # Output
-NAME		= gnl
+NAME		= gnl.out
 
 # BUFFER_SIZE Tests
 BUF_SIZE	= 12
