@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/16 21:33:39 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/17 00:13:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,12 @@ int	get_next_line(int fd, char **line)
 	if (!buf || !tmp.next || !tmp.content)
 		return (MALLOC_ERROR);
 	if (!next[fd])
-		next[fd] = ft_strdup("",NO_CLEAN);
+		next[fd] = ft_strdup("", NO_CLEAN);
 	nl = gnl_read(fd, buf, &next[fd], &tmp);
 	ft_clean(&buf);
-	if (nl == 1 || (nl == 0 && next[fd]))///
+	if (nl == 1 || (nl == 0 && next[fd])) ///
 		*line = ft_strdup(next[fd], CLEAN);
+	next[fd] = ft_strdup("", NO_CLEAN);
 	if (nl < 1)
 		return (nl);
 	next[fd] = tmp.next;
