@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/17 00:13:27 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/17 04:07:52 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	ft_split_new_line(char *str, char *line, char *next)
 			while (str[++i])
 				next[++j] = str[i];
 			next[++j] = '\0';
-			return (FOUND_NL);
+			return (FOUND_LINE_FEED);
 		}
 		else
 			line[j] = str[i];
@@ -36,7 +36,7 @@ int	ft_split_new_line(char *str, char *line, char *next)
 		j++;
 	}
 	line[j] = '\0';
-	return (NO_NL);
+	return (NO_LINE_FEED);
 }
 
 int	gnl_read(int fd, char *buf, char **next, t_gnl *tmp)
@@ -45,14 +45,14 @@ int	gnl_read(int fd, char *buf, char **next, t_gnl *tmp)
 	int	n_read;
 
 	n_read = READ_OK;
-	nl = FOUND_NL;
-	if (ft_split_new_line(*next, (*tmp).content, (*tmp).next) == NO_NL)
+	nl = FOUND_LINE_FEED;
+	if (ft_split_new_line(*next, (*tmp).content, (*tmp).next) == NO_LINE_FEED)
 	{
 		ft_bzero((*tmp).content, BUFFER_SIZE + 1);
 		if (!(*tmp).content)
 			return (MALLOC_ERROR);
-		nl = NO_NL;
-		while (nl == NO_NL)
+		nl = NO_LINE_FEED;
+		while (nl == NO_LINE_FEED)
 		{
 			*next = ft_strjoin(*next, (*tmp).content, CLEAN);
 			n_read = read(fd, buf, BUFFER_SIZE);
@@ -60,7 +60,7 @@ int	gnl_read(int fd, char *buf, char **next, t_gnl *tmp)
 				return (READ_NOT_OK);
 			buf[n_read] = '\0';
 			nl = ft_split_new_line(buf, (*tmp).content, (*tmp).next);
-			if (nl == NO_NL && n_read == REACHED_EOF) ///
+			if (nl == NO_LINE_FEED && n_read == REACHED_EOF) ///
 				return (n_read);
 		}
 		*next = ft_strjoin(*next, (*tmp).content, CLEAN);

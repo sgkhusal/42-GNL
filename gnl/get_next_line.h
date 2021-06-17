@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:23 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/16 20:48:15 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/17 04:07:22 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define REACHED_EOF 0
 # define MALLOC_ERROR -1
 # define INPUT_ERROR -1
-# define FOUND_NL 1
-# define NO_NL 0
+# define FOUND_LINE_FEED 1
+# define NO_LINE_FEED 0
 # define CLEAN 1
 # define NO_CLEAN 0
 
