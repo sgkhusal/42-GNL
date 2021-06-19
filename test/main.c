@@ -6,24 +6,11 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/17 05:13:08 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/19 17:03:54 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../gnl/get_next_line.h"
-#include <fcntl.h>
-#include <stdio.h>
-
-#define TITLE1(string)		"\033[1;33m" string "\033[0m"
-#define TITLE2(string)		"\033[0;32m" string "\033[0m"
-#define LINE(string)		"\033[38;5;75m" string "\033[0m"
-#define GNL_RET(string)		"\033[38;5;43m" string "\033[0m"
-#define LINE_RET(string)	"\033[0;33m" string "\033[0m"
-#define LINE_NOT_OK(string)	"\033[1;31m" string "\033[0m"
-#define LINE_OK(string)		"\033[1;32m" string "\033[0m"
-
-#define NOT_OK	0
-#define OK		1
+#include "test.h"
 
 int	check_line(char *str1, char *str2, int line)
 {
@@ -71,8 +58,9 @@ void	test_script(int fd, char **str)
 		printf("EOF\n");
 	if (gnl == -1)
 		printf("Return Error\n");
-	if (gnl_ok == OK)
+	if (gnl_ok == OK || (gnl == -1 && (BUFFER_SIZE < 1 || fd < 0 || fd == 42 || fd > OPEN_MAX)))
 		printf(LINE_OK("OK\n"));
+	/* note: fd == 42 is the condition for test_arbitrary_fd that it is not open */
 	close(fd);
 }
 
@@ -267,6 +255,18 @@ void	test_arbitrary_fd(void)
 	test_script(fd, str);
 }
 
+void	test_limit_fd(void)
+{
+	char	*str[1];
+	int		fd;
+
+	/* the result of this test should be: "Return error". */
+	str[0] = ft_strdup_simple("Testing limits for fd");
+	printf(TITLE2("\nfd limit test\n- fd limit on Guacamole: 256\n- fd limit on Linux: 1024\n"));
+	fd =  OPEN_MAX + 1;
+	test_script(fd, str);
+}
+
 void	test_scrpit2(int fd)
 {
 	char	*line;
@@ -290,6 +290,8 @@ void	test_scrpit2(int fd)
 		printf("EOF\n");
 	if (gnl == -1)
 		printf("Return Error\n");
+	if (gnl == -1 && (BUFFER_SIZE < 1 || fd < 0 || fd > OPEN_MAX))
+		printf(LINE_OK("OK\n"));
 	close(fd);
 }
 
@@ -341,25 +343,22 @@ int	main(void)
 {
 	printf(TITLE1("***** Get Next Line Tester *****\n"));
 
-	//test_hello2(); //ok
-	//test_hello(); //ok
-	//test_hotel_diablo(); //ok
-	//test_empty_file(); //ok
-	//test_multiple_empty_line(); //ok
-	//test_single_long_line(); //ok quando sozinho
-	test_multiple_long_line(); //not ok
-	//test_single_short_line1(); //ok
-	//test_single_short_line2(); //ok
-	//test_single_short_line3(); //ok
-	//test_single_short_line4(); //ok
-	//test_multiple_short_line(); //ok
-	//test_arbitrary_fd(); //ok
-	//test_fd_stdin(); //ok
-	//test_fd_stdout(); //ok
-
+	/*test_hello2(); //ok
+	test_hello(); //ok*/
+	test_hotel_diablo(); //ok
+	/*test_empty_file(); //ok
+	test_multiple_empty_line(); //ok*/
+	test_single_long_line(); //ok quando sozinho
+	//test_multiple_long_line(); //not ok
+	/*test_single_short_line1(); //ok
+	test_single_short_line2(); //ok
+	test_single_short_line3(); //ok
+	test_single_short_line4(); //ok
+	test_multiple_short_line(); //ok
+	test_arbitrary_fd(); //ok
+	test_limit_fd();
+	test_fd_stdin(); //ok
+	test_fd_stdout(); //ok*/
 	//test_binary_file();
-
 	return (0);
-
-	// test 7: read from a redirection
 }

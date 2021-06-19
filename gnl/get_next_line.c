@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/17 04:07:52 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/17 06:01:08 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ int	gnl_read(int fd, char *buf, char **next, t_gnl *tmp)
 	if (ft_split_new_line(*next, (*tmp).content, (*tmp).next) == NO_LINE_FEED)
 	{
 		ft_bzero((*tmp).content, BUFFER_SIZE + 1);
-		if (!(*tmp).content)
-			return (MALLOC_ERROR);
 		nl = NO_LINE_FEED;
 		while (nl == NO_LINE_FEED)
 		{

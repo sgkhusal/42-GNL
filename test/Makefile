@@ -6,7 +6,7 @@
 #    By: sguilher <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 23:17:16 by sguilher          #+#    #+#              #
-#    Updated: 2021/06/17 03:27:33 by sguilher         ###   ########.fr        #
+#    Updated: 2021/06/19 17:45:27 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,23 +22,20 @@ FILES		= get_next_line.c get_next_line_utils.c
 SRCS		= $(addprefix $(GNL_PATH), $(FILES))
 
 # Test files
-MAIN		= main.c
-# fd = standard input test
-# fd from a redirection test
-# multiple/single long line test
-# multiple/single short line test (<4)
-# multiple/single empty line
-# send a new line to standard output test
-# Ctrl+D test
-# Test binary file
+MAIN				= main.c
+REDIRECTION_TEST	= redirection.c
+REDIRECTION_FILE	= file_tests/harry_potter1
+BONUS_TEST			= bonus.c
 # read more than 1 fd at the same time
 
 # Output
-NAME		= gnl.out
+NAME			= gnl
+REDIRECTION		= redirection
+BONUS			= bonus
 
 # BUFFER_SIZE Tests
 BUF_SIZE	= 12
-BUF_TESTS	= 0 1 2 3 4 7 8 11 12 13 20 25 256 257 1024 1025 9999 10000000
+BUF_TESTS	= n1 0 1 2 3 4 7 8 11 12 13 20 25 256 257 1024 1025 9999 10000000
 ALL_BUF_TESTS	= $(addprefix buf, $(BUF_TESTS))
 
 
@@ -48,6 +45,7 @@ CFLAGS		= -Wall -Wextra -Werror
 #CFLAGS		= -g -Wall -Wextra -Werror#debugger
 LIMITS		= -D OPEN_MAX=1024 # take out in MacOX
 BUF_MACRO	= -D BUFFER_SIZE=
+BUF_MACRO_NEGATIVE	= -D BUFFER_SIZE=-1
 COMPL		= $(CC) $(CFLAGS) $(SRCS) $(LIMITS) # Linux
 #COMPL		= $(CC) $(CFLAGS) $(SRCS) -o $(NAME) # MacOX
 
@@ -56,21 +54,44 @@ RM			= rm -f
 
 ##### Rules #####
 
+# simple test
 all:	$(NAME) cat
 
+# redirection test
+r:		$(REDIRECTION) cat
+
+# test different BUFFER_SIZE values
+buffer:	$(ALL_BUF_TESTS) cat
+
+# bonus - read multiple file descriptor test
+b:		$(BONUS) cat
+
+# clean
+fclean:
+		@$(RM) $(NAME) $(ALL_BUF_TESTS) $(REDIRECTION) $(BONUS)
+
+re:		fclean all
+
+# tests
 $(NAME):
 		@$(COMPL) $(MAIN) $(BUF_MACRO)$(BUF_SIZE) -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
 		@./$@
 
-# clean
-fclean:
-		@$(RM) $(NAME) $(ALL_BUF_TESTS)
+$(REDIRECTION):
+		@$(COMPL) $(REDIRECTION_TEST) $(BUF_MACRO)$(BUF_SIZE) -o $@
+		@echo "\033[1m\033[38;5;11m \nTest: $(REDIRECTION) - $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
+		@./$@ < $(REDIRECTION_FILE)
 
-re:		fclean all
+$(BONUS):
+		@$(COMPL) $(BONUS_TEST) $(BUF_MACRO)$(BUF_SIZE) -o $@
+		@echo "\033[1m\033[38;5;11m \nTest: $(BONUS) - $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
+		@./$@
 
-# tests
-testsbuf:	$(ALL_BUF_TESTS) cat
+bufn1:
+		$(COMPL) $(MAIN) $(BUF_MACRO_NEGATIVE) -o $@
+		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO_NEGATIVE)\n \033[0m"
+		./$@
 
 buf0:
 		$(COMPL) $(MAIN) $(BUF_MACRO)0 -o $@
