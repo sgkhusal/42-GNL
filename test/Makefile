@@ -6,7 +6,7 @@
 #    By: sguilher <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 23:17:16 by sguilher          #+#    #+#              #
-#    Updated: 2021/06/19 17:45:27 by sguilher         ###   ########.fr        #
+#    Updated: 2021/06/20 06:48:53 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SRCS		= $(addprefix $(GNL_PATH), $(FILES))
 
 # Test files
 MAIN				= main.c
+FD_TEST				= fd.c
 REDIRECTION_TEST	= redirection.c
 REDIRECTION_FILE	= file_tests/harry_potter1
 BONUS_TEST			= bonus.c
@@ -30,19 +31,20 @@ BONUS_TEST			= bonus.c
 
 # Output
 NAME			= gnl
+FD				= fd
 REDIRECTION		= redirection
 BONUS			= bonus
 
 # BUFFER_SIZE Tests
 BUF_SIZE	= 12
-BUF_TESTS	= n1 0 1 2 3 4 7 8 11 12 13 20 25 256 257 1024 1025 9999 10000000
+BUF_TESTS	= n1 0 1 2 3 4 7 8 11 12 13 25 100 1025 9999 10000000
 ALL_BUF_TESTS	= $(addprefix buf, $(BUF_TESTS))
 
 
 # Compilation
 CC			= clang
-CFLAGS		= -Wall -Wextra -Werror
-#CFLAGS		= -g -Wall -Wextra -Werror#debugger
+#CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -g -Wall -Wextra -Werror #debugger/valgrind
 LIMITS		= -D OPEN_MAX=1024 # take out in MacOX
 BUF_MACRO	= -D BUFFER_SIZE=
 BUF_MACRO_NEGATIVE	= -D BUFFER_SIZE=-1
@@ -57,6 +59,9 @@ RM			= rm -f
 # simple test
 all:	$(NAME) cat
 
+# file descriptors tests
+f:		$(FD) cat
+
 # redirection test
 r:		$(REDIRECTION) cat
 
@@ -68,13 +73,18 @@ b:		$(BONUS) cat
 
 # clean
 fclean:
-		@$(RM) $(NAME) $(ALL_BUF_TESTS) $(REDIRECTION) $(BONUS)
+		@$(RM) $(NAME) $(FD) $(REDIRECTION) $(ALL_BUF_TESTS) $(BONUS)
 
 re:		fclean all
 
 # tests
 $(NAME):
 		@$(COMPL) $(MAIN) $(BUF_MACRO)$(BUF_SIZE) -o $@
+		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
+		@./$@
+
+$(FD):
+		@$(COMPL) $(FD_TEST) $(BUF_MACRO)$(BUF_SIZE) -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
 		@./$@
 
@@ -89,99 +99,84 @@ $(BONUS):
 		@./$@
 
 bufn1:
-		$(COMPL) $(MAIN) $(BUF_MACRO_NEGATIVE) -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO_NEGATIVE) -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO_NEGATIVE)\n \033[0m"
-		./$@
+		@./$@
 
 buf0:
-		$(COMPL) $(MAIN) $(BUF_MACRO)0 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)0 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)0\n \033[0m"
-		./$@
+		@./$@
 
 buf1:
-		$(COMPL) $(MAIN) $(BUF_MACRO)1 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)1 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)1\n \033[0m"
-		./$@
+		@./$@
 
 buf2:
-		$(COMPL) $(MAIN) $(BUF_MACRO)2 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)2 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)2\n \033[0m"
-		./$@
+		@./$@
 
 buf3:
-		$(COMPL) $(MAIN) $(BUF_MACRO)3 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)3 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)3\n \033[0m"
-		./$@
+		@./$@
 
 buf4:
-		$(COMPL) $(MAIN) $(BUF_MACRO)4 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)4 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)4\n \033[0m"
-		./$@
+		@./$@
 
 buf7:
-		$(COMPL) $(MAIN) $(BUF_MACRO)7 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)7 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)7\n \033[0m"
-		./$@
+		@./$@
 
 buf8:
-		$(COMPL) $(MAIN) $(BUF_MACRO)8 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)8 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)8\n \033[0m"
-		./$@
+		@./$@
 
 buf11:
-		$(COMPL) $(MAIN) $(BUF_MACRO)11 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)11 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)11\n \033[0m"
-		./$@
+		@./$@
 
 buf12:
-		$(COMPL) $(MAIN) $(BUF_MACRO)12 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)12 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)12\n \033[0m"
-		./$@
+		@./$@
 
 buf13:
-		$(COMPL) $(MAIN) $(BUF_MACRO)13 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)13 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)13\n \033[0m"
-		./$@
-
-buf20:
-		$(COMPL) $(MAIN) $(BUF_MACRO)20 -o $@
-		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)20\n \033[0m"
-		./$@
+		@./$@
 
 buf25:
-		$(COMPL) $(MAIN) $(BUF_MACRO)25 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)25 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)25\n \033[0m"
-		./$@
+		@./$@
 
-buf256:
-		$(COMPL) $(MAIN) $(BUF_MACRO)256 -o $@
-		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)256\n \033[0m"
-		./$@
-
-buf257:
-		$(COMPL) $(MAIN) $(BUF_MACRO)257 -o $@
-		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)257\n \033[0m"
-		./$@
-
-buf1024:
-		$(COMPL) $(MAIN) $(BUF_MACRO)1024 -o $@
-		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)1024\n \033[0m"
-		./$@
+buf100:
+		@$(COMPL) $(MAIN) $(BUF_MACRO)100 -o $@
+		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)100\n \033[0m"
+		@./$@
 
 buf1025:
-		$(COMPL) $(MAIN) $(BUF_MACRO)1025 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)1025 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)1025\n \033[0m"
-		./$@
+		@./$@
 
 buf9999:
-		$(COMPL) $(MAIN) $(BUF_MACRO)9999 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)9999 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)9999\n \033[0m"
-		./$@
+		@./$@
 
 buf10000000:
-		$(COMPL) $(MAIN) $(BUF_MACRO)10000000 -o $@
+		@$(COMPL) $(MAIN) $(BUF_MACRO)10000000 -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BUF_MACRO)10000000\n \033[0m"
-		./$@
+		@./$@
 
 cat:
 	@echo "\n"

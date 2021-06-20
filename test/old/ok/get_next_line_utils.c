@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/20 03:50:47 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/19 22:28:51 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,16 @@ size_t	ft_strlen(char *str)
 	return (len);
 }
 
-char	*ft_strdup(char *s)
+void	ft_bzero(char *s, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+		s[i++] = '\0';
+}
+
+char	*ft_strdup(char *s, int clean)
 {
 	char	*copy;
 	size_t	i;
@@ -48,10 +57,12 @@ char	*ft_strdup(char *s)
 		i++;
 	}
 	copy[i] = '\0';
+	if (clean == 1 && s)
+		ft_clean(&s);
 	return (copy);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin(char *s1, char *s2, int clean)
 {
 	size_t	size;
 	size_t	i;
@@ -61,9 +72,9 @@ char	*ft_strjoin(char *s1, char *s2)
 	if (!s1 && !s2)
 		return (NULL);
 	else if (!s1 || !s1[0])
-		return (ft_strdup(s2));
+		return (ft_strdup(s2, NO_CLEAN));
 	else if (!s2 || !s2[0])
-		return (ft_strdup(s1));
+		return (ft_strdup(s1, NO_CLEAN));
 	size = ft_strlen(s1) + ft_strlen(s2) + 1;
 	join = (char *)malloc(size * sizeof(char));
 	if (!join)
@@ -74,6 +85,8 @@ char	*ft_strjoin(char *s1, char *s2)
 	j = 0;
 	while (++j - 1 + i - 1 < size)
 		join[i + j - 2] = s2[j - 1];
-	join[i + j - 3] = '\0';
+	join[i + j - 2] = '\0';
+	if (clean == 1 && s1) ///
+		ft_clean(&s1);
 	return (join);
 }
