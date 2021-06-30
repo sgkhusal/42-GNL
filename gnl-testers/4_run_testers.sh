@@ -14,7 +14,6 @@ git clone https://github.com/Tripouille/gnlTester.git
 git clone https://github.com/saarikoski-jules/gnl_unit_tests.git
 
 # RUN GNL_lover
-cd ~
 cd GNL_lover
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h copy_in_here_GNL_files
 ./GNL_lover.sh
