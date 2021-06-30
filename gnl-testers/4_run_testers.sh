@@ -14,15 +14,16 @@ git clone https://github.com/Tripouille/gnlTester.git
 git clone https://github.com/saarikoski-jules/gnl_unit_tests.git
 
 # RUN GNL_lover
-cd ~
-cd GNL_lover
+cd GNL_lover -------------
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h copy_in_here_GNL_files
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h copy_in_here_GNL_files
 ./GNL_lover.sh
 cd ..
 
 # RUN gnl_tester
 cd gnl_tester
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
 # ./run_tests.sh 0
 ./run_tests.sh 1
 ./run_tests.sh 2
@@ -42,6 +43,7 @@ cd ..
 cd 42cursus_gnl_tests
 mkdir get_next_line
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h get_next_line
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h get_next_line
 make
 cd ..
 
@@ -50,7 +52,7 @@ cd 42TESTERS-GNL
 ./all_tests.sh
 cd ..
 
-# RUN Get_Next_Line_Tester
+# RUN Get_Next_Line_Tester --------------
 cd Get_Next_Line_Tester
 bash run.sh
 cd ..
@@ -64,17 +66,19 @@ cd ..
 # RUN gnlkiller
 cd gnlkiller
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
 bash test.sh
 cd ..
 
 # RUN gnlTester
-cd gnlTester
+cd gnlTester ----------------
 make m
 cd ..
 
 # RUN gnl-unit-test
 cd gnl-unit-test
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
 bash test.sh
 cd ..
 
