@@ -1,0 +1,28 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "compile",
+            "command": "/usr/bin/gcc",
+            "args": [
+                "-g", "-Wall", "-Wextra", "-Werror",
+                "${fileDirname}/*c",
+                "-D OPEN_MAX=1024",
+                "-D BUFFER_SIZE=12",
+                "-o",
+                "${fileDirname}/a.out"
+            ],
+            "options": {
+                "cwd": "/usr/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+    ]
+}

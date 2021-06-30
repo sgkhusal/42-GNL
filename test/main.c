@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:58:51 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/20 06:42:54 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/20 06:57:15 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ void	test_script(int fd, char **str, int total_line)
 		gnl_ok = check_line(str[i - 1], line, i);
 		if (gnl_ok == NOT_OK)
 			return ;
-		printf(LINE("\nLine %d ") GNL_RET("[gnl return = %d]: ") LINE_RET("%s"), i, gnl, line);
+		//printf(LINE("\nLine %d ") GNL_RET("[gnl return = %d]: ") LINE_RET("%s"), i, gnl, line);
 		free(line);
 		i++;
 	}
 	if (line != NULL && gnl == 0)
 	{
 		gnl_ok = check_line(str[i - 1], line, i);
-		printf(LINE("\nLine %d ") GNL_RET("[gnl return = %d]: ") LINE_RET("%s\n"), i, gnl, line);
+		//printf(LINE("\nLine %d ") GNL_RET("[gnl return = %d]: ") LINE_RET("%s\n"), i, gnl, line);
 		free(line);
 	}
 	if (gnl == 0)
