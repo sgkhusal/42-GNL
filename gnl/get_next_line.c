@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/30 17:37:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/30 21:42:41 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,5 +118,7 @@ int	get_next_line(int fd, char **line)
 	ft_clean(&next[fd]);
 	if (nl == 1)
 		next[fd] = tmp;
+	else
+		ft_clean(&tmp);
 	return (nl);
 }
