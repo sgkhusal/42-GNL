@@ -13,8 +13,8 @@ git clone https://github.com/harm-smits/gnl-unit-test.git
 git clone https://github.com/Tripouille/gnlTester.git
 git clone https://github.com/saarikoski-jules/gnl_unit_tests.git
 
-# RUN GNL_lover
-cd GNL_lover -------------
+# RUN GNL_lover -------------
+cd GNL_lover
 cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h copy_in_here_GNL_files
 #cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h copy_in_here_GNL_files
 ./GNL_lover.sh
@@ -57,7 +57,7 @@ cd Get_Next_Line_Tester
 bash run.sh
 cd ..
 
-# RUN gnl-war-machine-v2019
+# RUN gnl-war-machine-v2019 ----------------
 cd gnl-war-machine-v2019
 sed -i '' "s/..\/..\/get_next_line/../" my_config.sh
 ./grademe.sh
@@ -70,8 +70,8 @@ cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
 bash test.sh
 cd ..
 
-# RUN gnlTester
-cd gnlTester ----------------
+# RUN gnlTester ----------------
+cd gnlTester
 make m
 cd ..
 
