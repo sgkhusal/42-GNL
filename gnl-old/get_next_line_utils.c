@@ -6,20 +6,11 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/07/01 22:00:23 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/30 23:06:35 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-void	gnl_strjoin(char **next, char *buffer)
-{
-	char	*aux;
-
-	aux = ft_strjoin(*next, buffer);
-	ft_clean(next);
-	*next = aux;
-}
 
 void	ft_clean(char **str)
 {
@@ -28,6 +19,20 @@ void	ft_clean(char **str)
 	if (*str)
 		free(*str);
 	*str = NULL;
+}
+
+int	check_new_line(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (NO_LINE_FEED);
 }
 
 size_t	ft_strlen(char *str)

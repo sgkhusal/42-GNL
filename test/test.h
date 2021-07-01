@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/19 17:00:00 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/19 17:03:50 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/07/01 21:37:26 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include "../gnl/get_next_line.h"
 # include <stdio.h>
 # include <fcntl.h>
+
+//# define BUFFER_SIZE 12
+//# define OPEN_MAX 256
 
 # define TITLE1(string)		"\033[1;33m" string "\033[0m"
 # define TITLE2(string)		"\033[0;32m" string "\033[0m"
