@@ -6,39 +6,30 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/30 21:46:46 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/30 23:12:49 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line_bonus.h"
 
-int	check_new_line(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (NO_LINE_FEED);
-}
-
-void	gnl_strjoin(char **next, char *buffer, int only_next)
+void	gnl_strjoin(char **next, char *buffer)
 {
 	char	*aux;
 
+	aux = ft_strjoin(*next, buffer);
+	ft_clean(next);
+	*next = aux;
+}
+
+void	gnl_next(char **next, char *aux, int only_next)
+{
 	if (only_next == 0)
 	{
-		aux = ft_strjoin(*next, buffer);
-		ft_clean(next);
-		*next = aux;
+		gnl_strjoin(next, aux);
+		ft_clean(&aux);
 	}
-	else
+	else if (only_next == 1)
 	{
-		aux = ft_strdup(buffer);
 		ft_clean(next);
 		*next = aux;
 	}
@@ -53,9 +44,12 @@ int	gnl_split(char *buffer, char **next, char *tmp, int only_next)
 	aux = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!aux)
 		return (MALLOC_ERROR);
-	i = -1;
-	while (buffer[++i] && buffer[i] != '\n')
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
 		aux[i] = buffer[i];
+		i++;
+	}
 	aux[i] = '\0';
 	j = 0;
 	i++;
@@ -66,8 +60,7 @@ int	gnl_split(char *buffer, char **next, char *tmp, int only_next)
 		j++;
 	}
 	tmp[j] = '\0';
-	gnl_strjoin(next, aux, only_next);
-	ft_clean(&aux);
+	gnl_next(next, aux, only_next);
 	return (1);
 }
 
@@ -87,7 +80,7 @@ int	gnl_read(int fd, char *buf, char **next, char *tmp)
 			buf[n_read] = '\0';
 			nl = check_new_line(buf);
 			if (nl == NO_LINE_FEED)
-				gnl_strjoin(next, buf, 0);
+				gnl_strjoin(next, buf);
 		}
 		nl = gnl_split(buf, next, tmp, 0);
 	}

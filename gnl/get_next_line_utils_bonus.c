@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:13 by sguilher          #+#    #+#             */
-/*   Updated: 2021/06/30 17:41:26 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/06/30 23:12:16 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ void	ft_clean(char **str)
 	if (*str)
 		free(*str);
 	*str = NULL;
+}
+
+int	check_new_line(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '\n')
+			return (i);
+		i++;
+	}
+	return (NO_LINE_FEED);
 }
 
 size_t	ft_strlen(char *str)
