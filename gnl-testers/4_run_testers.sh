@@ -45,19 +45,13 @@ sed -i '' "s/..\/..\/get_next_line/../" my_config.sh
 ./grademe.sh
 cd ..
 
-# CLONE AND RUN gnlkiller
-#git clone https://github.com/Sherchryst/gnlkiller.git
-#cd gnlkiller
-#cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
-#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
-#bash test.sh
-#cd ..
-
 # CLONE AND RUN gnl_unit_tests
 git clone https://github.com/saarikoski-jules/gnl_unit_tests.git
 cd gnl_unit_tests
 sed -i '' "s/PATH_GNL=\"..\/get_next_line\"/PATH_GNL=../" run_tests.sh
 sh run_tests.sh
+#sh run_tests.sh bonus
+sh run_tests.sh malloc
 cd ..
 
 # CLONE AND RUN gnl_tester
@@ -65,7 +59,7 @@ cd ..
 #cd gnl_tester
 #cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
 #cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
-# ./run_tests.sh 0
+## ./run_tests.sh 0
 #./run_tests.sh 1 -----
 #./run_tests.sh 2 -----
 #./run_tests.sh 3
@@ -76,7 +70,15 @@ cd ..
 #./run_tests.sh 8
 #./run_tests.sh 9999
 #./run_tests.sh 10000000
-#./run_tests.sh 99999999
+##./run_tests.sh 99999999
+#cd ..
+
+# CLONE AND RUN gnlkiller
+#git clone https://github.com/Sherchryst/gnlkiller.git
+#cd gnlkiller
+#cp ../get_next_line.c ../get_next_line_utils.c ../get_next_line.h .
+#cp ../get_next_line_bonus.c ../get_next_line_utils_bonus.c ../get_next_line_bonus.h .
+#bash test.sh
 #cd ..
 
 # CLONE AND RUN gnl-unit-test

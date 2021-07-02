@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/07/02 20:05:05 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/07/02 21:38:14 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	gnl_split(char *str, char **next, char *tmp, int only_next)
 		tmp[++j] = str[i];
 	tmp[++j] = '\0';
 	gnl_next(next, aux, only_next);
+	if (!(*next))
+		return (MALLOC_ERROR2);
 	return (1);
 }
 
@@ -60,6 +62,8 @@ int	check_new_line(char *str, char **next, char *tmp, int only_next)
 	}
 	if (only_next == 0)
 		gnl_strjoin(next, str);
+	if (!(*next))
+		return (MALLOC_ERROR2);
 	return (NO_LINE_FEED);
 }
 
@@ -93,15 +97,17 @@ int	get_next_line(int fd, char **line)
 		return (INPUT_ERROR);
 	buf = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!buf || !tmp)
-		return (MALLOC_ERROR);
 	if (!next[fd])
 		next[fd] = ft_strdup("");
+	if (!buf || !tmp || !next[fd])
+		return (MALLOC_ERROR);
 	nl = gnl_read(fd, buf, &next[fd], tmp);
 	ft_clean(&buf);
 	if (nl == 1 || (nl == 0 && next[fd]))
 		*line = ft_strdup(next[fd]);
 	ft_clean(&next[fd]);
+	if (*line == NULL)
+		nl = MALLOC_ERROR;
 	if (nl == 1)
 		next[fd] = tmp;
 	else
