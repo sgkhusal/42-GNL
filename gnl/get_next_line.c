@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/13 21:34:27 by sguilher          #+#    #+#             */
-/*   Updated: 2021/07/01 22:00:35 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/07/02 19:45:28 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ int	gnl_read(int fd, char *buf, char **next, char *tmp)
 	int	n_read;
 
 	nl = check_new_line(*next, next, tmp, 1);
-		while (nl == NO_LINE_FEED)
-		{
-			n_read = read(fd, buf, BUFFER_SIZE);
-			if (n_read < READ_OK)
-				return (n_read);
-			buf[n_read] = '\0';
-			nl = check_new_line(buf, next, tmp, 0);
-		}
+	while (nl == NO_LINE_FEED)
+	{
+		n_read = read(fd, buf, BUFFER_SIZE);
+		if (n_read < READ_OK)
+			return (n_read);
+		buf[n_read] = '\0';
+		nl = check_new_line(buf, next, tmp, 0);
+	}
 	if (nl == MALLOC_ERROR2)
 		return (MALLOC_ERROR);
 	return (nl);

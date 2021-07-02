@@ -6,7 +6,7 @@
 #    By: sguilher <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/05/17 23:17:16 by sguilher          #+#    #+#              #
-#    Updated: 2021/06/20 06:48:53 by sguilher         ###   ########.fr        #
+#    Updated: 2021/07/02 20:13:28 by sguilher         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,9 @@ GNL_PATH	= ../gnl/
 
 # Gnl Sources
 FILES		= get_next_line.c get_next_line_utils.c
+BONUS_FILES	= get_next_line_bonus.c get_next_line_utils_bonus.c
 SRCS		= $(addprefix $(GNL_PATH), $(FILES))
+BONUS_SRCS	= $(addprefix $(GNL_PATH), $(BONUS_FILES))
 
 # Test files
 MAIN				= main.c
@@ -49,7 +51,9 @@ LIMITS		= -D OPEN_MAX=1024 # take out in MacOX
 BUF_MACRO	= -D BUFFER_SIZE=
 BUF_MACRO_NEGATIVE	= -D BUFFER_SIZE=-1
 COMPL		= $(CC) $(CFLAGS) $(SRCS) $(LIMITS) # Linux
-#COMPL		= $(CC) $(CFLAGS) $(SRCS) -o $(NAME) # MacOX
+BONUS_COMPL	= $(CC) $(CFLAGS) $(BONUS_SRCS) $(LIMITS) # Linux
+#COMPL		= $(CC) $(CFLAGS) $(SRCS) # MacOX
+#BONUS_COMPL	= $(CC) $(CFLAGS) $(BONUS_SRCS) # MacOX
 
 # clean
 RM			= rm -f
@@ -94,7 +98,7 @@ $(REDIRECTION):
 		@./$@ < $(REDIRECTION_FILE)
 
 $(BONUS):
-		@$(COMPL) $(BONUS_TEST) $(BUF_MACRO)$(BUF_SIZE) -o $@
+		@$(BONUS_COMPL) $(BONUS_TEST) $(BUF_MACRO)$(BUF_SIZE) -o $@
 		@echo "\033[1m\033[38;5;11m \nTest: $(BONUS) - $(BUF_MACRO)$(BUF_SIZE)\n \033[0m"
 		@./$@
 

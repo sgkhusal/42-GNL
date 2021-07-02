@@ -6,7 +6,7 @@
 /*   By: sguilher <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 16:57:23 by sguilher          #+#    #+#             */
-/*   Updated: 2021/07/01 22:00:32 by sguilher         ###   ########.fr       */
+/*   Updated: 2021/07/01 22:41:27 by sguilher         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define MALLOC_ERROR2 -2
 # define INPUT_ERROR -1
 # define NO_LINE_FEED -1
+
+//# define OPEN_MAX 256
 
 int		get_next_line(int fd, char **line);
 void	gnl_strjoin(char **next, char *buffer);
