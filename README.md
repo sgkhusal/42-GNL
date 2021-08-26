@@ -1,7 +1,12 @@
 # GNL-42SP
 Get Next Line 42 Project
 
-The get_next_line function reads one line at a time from a text file.
+The get_next_line function reads one line at a time from a text file (it reads the text file until finds a new line character \\n)
+
+Bonus: To be able to manage multiple file descriptors with your get_next_line. For
+example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can
+call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc.
+without losing the reading thread on each of the descriptors.
 
 ## Index
 
@@ -9,7 +14,7 @@ The get_next_line function reads one line at a time from a text file.
 - [test:](https://github.com/sgkhusal/GNL/tree/main/test) my own test program
 - [gnl-testers:](https://github.com/sgkhusal/GNL/tree/main/gnl-testers) other external tests
 
-## Get_next_line function
+## Get_next_line function - <[gnl:](https://github.com/sgkhusal/GNL/tree/main/gnl)> folder
 
 function prototype: `int	get_next_line(int fd, char **line);`
 
