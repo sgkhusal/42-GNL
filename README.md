@@ -5,9 +5,9 @@ The get_next_line function reads one line at a time from a text file.
 
 ## Index
 
-- [gnl](https://github.com/sgkhusal/GNL/tree/main/gnl): code developed for the project
-- [test](https://github.com/sgkhusal/GNL/tree/main/test): my own test program
-- [gnl-testers](https://github.com/sgkhusal/GNL/tree/main/gnl-testers): other external tests
+- [gnl:](https://github.com/sgkhusal/GNL/tree/main/gnl) code developed for the project
+- [test:](https://github.com/sgkhusal/GNL/tree/main/test) my own test program
+- [gnl-testers:](https://github.com/sgkhusal/GNL/tree/main/gnl-testers) other external tests
 
 ## Get_next_line function
 
