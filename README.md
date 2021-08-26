@@ -3,7 +3,12 @@ Get Next Line 42 Project
 
 The get_next_line function reads one line at a time from a file.\
 
-function prototype: `int	get_next_line(int fd, char **line);`
+function prototype: `int	get_next_line(int fd, char **line);`\
+
+####Return values:
+- 1 if readed a line
+- 0 if end of file
+- -1 if error
 
 ## How to use
 - add `#include <path/gnl/get_next_line.h>`
