@@ -10,6 +10,8 @@ example, if the file descriptors 3, 4 and 5 are accessible for reading, then you
 call get_next_line once on 3, once on 4, once again on 3 then once on 5 etc.
 without losing the reading thread on each of the descriptors.
 
+For more information about this project see [Get Next Line.pdf](https://github.com/sgkhusal/GNL/blob/main/Get%20Next%20Line.pdf)
+
 ## Index
 
 - [gnl:](https://github.com/sgkhusal/GNL/tree/main/gnl) code developed for the project
