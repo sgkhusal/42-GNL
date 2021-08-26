@@ -4,14 +4,17 @@ Get Next Line 42 Project
 The get_next_line function reads one line at a time from a file.
 
 ## How to use
-In your function, call `get_next_line(int fd, char **line)`\
+- add `#include <path/gnl/get_next_line.h>`
+- call `get_next_line(int fd, char **line)`\
 
 OBS: The file descriptor must have be open before\
 Eg: `fd = open(file_name, O_RDONLY);`
 
 # GNL-Tester
 This tester was made for the old version of 42 school get_next_line project\
-function prototype: int	get_next_line(int fd, char **line)
+
+function prototype: `int	get_next_line(int fd, char **line)`
+
 ## How to use the tester
 ### In test folder:
 - Change your GNL_PATH in the makefile
