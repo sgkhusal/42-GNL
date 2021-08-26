@@ -5,7 +5,7 @@ The get_next_line function reads one line at a time from a file.
 
 ## How to use
 In your function, call `get_next_line(int fd, char **line)`\
-The file descriptor must have be open before\
+*OBS: The file descriptor must have be open before\
 Eg: `fd = open(file_name, O_RDONLY);`
 
 # GNL-Tester
