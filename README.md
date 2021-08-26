@@ -1,11 +1,11 @@
 # GNL-42SP
 Get Next Line 42 Project
 
-The get_next_line function reads one line at a time from a file.\
+The get_next_line function reads one line at a time from a file.
 
-function prototype: `int	get_next_line(int fd, char **line);`\
+function prototype: `int	get_next_line(int fd, char **line);`
 
-##Return values:
+#### Return values:
 - 1 if readed a line
 - 0 if end of file
 - -1 if error
@@ -18,7 +18,7 @@ OBS: The file descriptor must have be open before\
 Eg: `fd = open(file_name, O_RDONLY);`
 
 # GNL-Tester
-This tester was made for the old version of 42 school get_next_line project\
+This tester was made for the old version of 42 school get_next_line project
 
 ## How to use the tester
 ### In test folder:
