@@ -1,7 +1,9 @@
 # GNL-42SP
 Get Next Line 42 Project
 
-The get_next_line function reads one line at a time from a text file (it reads the text file until finds a new line character \\n)
+The get_next_line function reads one line at a time from a text file\
+
+Calling get_next_line function in a loop will then allow you to read the text file one line at a time until the end of it.
 
 Bonus: To be able to manage multiple file descriptors with your get_next_line. For
 example, if the file descriptors 3, 4 and 5 are accessible for reading, then you can
