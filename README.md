@@ -7,7 +7,7 @@ function prototype: `int	get_next_line(int fd, char **line);`
 
 #### Return values:
 - 1 if readed a line
-- 0 if end of file
+- 0 if reached end of file
 - -1 if error
 
 ## How to use
