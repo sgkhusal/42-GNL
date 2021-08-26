@@ -1,7 +1,15 @@
 # GNL-42SP
 Get Next Line 42 Project
 
-The get_next_line function reads one line at a time from a file.
+The get_next_line function reads one line at a time from a text file.
+
+## Index
+
+- [gnl](https://github.com/sgkhusal/GNL/tree/main/gnl): code developed for the project
+- [test](https://github.com/sgkhusal/GNL/tree/main/test): my own test program
+- [gnl-testers](https://github.com/sgkhusal/GNL/tree/main/gnl-testers): other external tests
+
+## Get_next_line function
 
 function prototype: `int	get_next_line(int fd, char **line);`
 
@@ -10,11 +18,15 @@ function prototype: `int	get_next_line(int fd, char **line);`
 - 0 if reached end of file
 - -1 if error
 
-## How to use
-- add `#include <path/gnl/get_next_line.h>`
-- call `get_next_line(int fd, char **line)`
+Note: Files in suffixed with _bonus_ in <gnl> folder are copies of corresponding files.
 
-OBS: The file descriptor must have be open before\
+## How to use
+- git clone https://github.com/sgkhusal/GNL.git
+- add get_next_line header in your file: `#include 'path/gnl/get_next_line.h'`
+- call `get_next_line(int fd, char **line)`
+- in compilation, call `path/gnl/get_next_line.c path/gnl/get_next_line_utils.c -D BUFFER_SIZE=<size>`
+
+Note: The file descriptor must be open before get_next_line function\
 Eg: `fd = open(file_name, O_RDONLY);`
 
 # GNL-Tester
