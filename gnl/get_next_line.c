@@ -104,7 +104,7 @@ int	get_next_line(int fd, char **line)
 	nl = gnl_read(fd, buf, &next[fd], tmp);
 	ft_clean(&buf);
 	if (nl == 1 || (nl == 0 && next[fd]))
-		*line = ft_strdup(next[fd]);
+		*line = ft_strjoin(next[fd], "\n");
 	ft_clean(&next[fd]);
 	if (*line == NULL)
 		nl = MALLOC_ERROR;
